@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'nav_bar.html' %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+    <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-extrabold text-gray-900">{{ tour.name }}</h1>
+            {% if user.is_authenticated %}
+                <div class="space-x-4">
+                    <a href="{% url 'tour_update' tour.pk %}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Edit
+                    </a>
+                    <a href="{% url 'tour_delete' tour.pk %}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                        Delete
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+        <img src="{{ tour.image.url }}" alt="{{ tour.name }}" class="w-full h-64 object-cover mb-4">
+        <p class="text-gray-700">{{ tour.description }}</p>
+        <p class="text-gray-600 mt-4">Price per person: ${{ tour.price_per_person }}</p>
+        <p class="text-gray-600">Duration: {{ tour.duration }}</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,102 @@
+<!-- dashboard/dashboard.html -->
+{% extends "base.html" %}
+
+{% block content %}
+{% include 'nav_bar.html' %}
+<div class="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-6">Dashboard</h1>
+
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-lg font-semibold text-gray-700">Total Destinations</h2>
+            <p class="mt-2 text-3xl font-bold">{{ total_destinations }}</p>
+        </div>
+
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-lg font-semibold text-gray-700">Total Accommodations</h2>
+            <p class="mt-2 text-3xl font-bold">{{ total_accommodations }}</p>
+        </div>
+
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-lg font-semibold text-gray-700">Total Tours</h2>
+            <p class="mt-2 text-3xl font-bold">{{ total_tours }}</p>
+        </div>
+
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-lg font-semibold text-gray-700">Total Bookings</h2>
+            <p class="mt-2 text-3xl font-bold">{{ total_bookings }}</p>
+        </div>
+
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-lg font-semibold text-gray-700">Total Reviews</h2>
+            <p class="mt-2 text-3xl font-bold">{{ total_reviews }}</p>
+        </div>
+    </div>
+
+    <!-- Recent Bookings -->
+    <h2 class="text-2xl font-bold text-gray-900 mt-8">Recent Bookings</h2>
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white shadow-md rounded-lg mt-4">
+            <thead>
+                <tr class="text-left bg-gray-200 text-gray-600">
+                    <th class="py-3 px-4">User</th>
+                    <th class="py-3 px-4">Tour/Accommodation</th>
+                    <th class="py-3 px-4">Start Date</th>
+                    <th class="py-3 px-4">End Date</th>
+                    <th class="py-3 px-4">Total Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in recent_bookings %}
+                <tr class="border-t border-gray-200">
+                    <td class="py-3 px-4">{{ booking.user.username }}</td>
+                    <td class="py-3 px-4">
+                        {% if booking.tour %}
+                            {{ booking.tour.name }}
+                        {% else %}
+                            {{ booking.accommodation.name }}
+                        {% endif %}
+                    </td>
+                    <td class="py-3 px-4">{{ booking.start_date }}</td>
+                    <td class="py-3 px-4">{{ booking.end_date }}</td>
+                    <td class="py-3 px-4">{{ booking.total_price }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="py-3 px-4 text-center">No recent bookings available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Recent Reviews -->
+    <h2 class="text-2xl font-bold text-gray-900 mt-8">Recent Reviews</h2>
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white shadow-md rounded-lg mt-4">
+            <thead>
+                <tr class="text-left bg-gray-200 text-gray-600">
+                    <th class="py-3 px-4">User</th>
+                    <th class="py-3 px-4">Rating</th>
+                    <th class="py-3 px-4">Comment</th>
+                    <th class="py-3 px-4">Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for review in recent_reviews %}
+                <tr class="border-t border-gray-200">
+                    <td class="py-3 px-4">{{ review.user.username }}</td>
+                    <td class="py-3 px-4">{{ review.rating }}</td>
+                    <td class="py-3 px-4">{{ review.comment }}</td>
+                    <td class="py-3 px-4">{{ review.created_at }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="py-3 px-4 text-center">No recent reviews available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

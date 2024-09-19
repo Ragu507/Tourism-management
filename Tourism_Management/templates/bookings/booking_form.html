@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'nav_bar.html' %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+    <h1 class="text-3xl font-extrabold text-gray-900 mb-6">{% if form.instance.pk %}Update{% else %}Create{% endif %} Booking</h1>
+    <form method="post" class="bg-white shadow-md rounded-lg p-6 space-y-6">
+        {% csrf_token %}
+        
+        <!-- Tour Field -->
+        <div>
+            <label for="{{ form.tour.id_for_label }}" class="block text-sm font-medium text-gray-700">Tour</label>
+            <select id="{{ form.tour.id_for_label }}" name="{{ form.tour.name }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                {% for option in form.tour.field.queryset %}
+                    <option value="{{ option.pk }}" {% if option.pk == form.tour.value %}selected{% endif %}>{{ option }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <!-- Accommodation Field -->
+        <div>
+            <label for="{{ form.accommodation.id_for_label }}" class="block text-sm font-medium text-gray-700">Accommodation</label>
+            <select id="{{ form.accommodation.id_for_label }}" name="{{ form.accommodation.name }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                {% for option in form.accommodation.field.queryset %}
+                    <option value="{{ option.pk }}" {% if option.pk == form.accommodation.value %}selected{% endif %}>{{ option }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <!-- Start Date Field -->
+        <div>
+            <label for="{{ form.start_date.id_for_label }}" class="block text-sm font-medium text-gray-700">Start Date</label>
+            <input type="date" id="{{ form.start_date.id_for_label }}" name="{{ form.start_date.name }}" value="{{ form.start_date.value }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        </div>
+        
+        <!-- End Date Field -->
+        <div>
+            <label for="{{ form.end_date.id_for_label }}" class="block text-sm font-medium text-gray-700">End Date</label>
+            <input type="date" id="{{ form.end_date.id_for_label }}" name="{{ form.end_date.name }}" value="{{ form.end_date.value }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        </div>
+        
+        <!-- Number of People Field -->
+        <div>
+            <label for="{{ form.number_of_people.id_for_label }}" class="block text-sm font-medium text-gray-700">Number of People</label>
+            <input type="number" id="{{ form.number_of_people.id_for_label }}" name="{{ form.number_of_people.name }}" value="{{ form.number_of_people.value }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        </div>
+        
+        <!-- Total Price Field (read-only) -->
+        <div>
+            <label for="{{ form.total_price.id_for_label }}" class="block text-sm font-medium text-gray-700">Total Price</label>
+            <input type="text" id="{{ form.total_price.id_for_label }}" name="{{ form.total_price.name }}" value="{{ form.total_price.value }}" readonly class="mt-1 block w-full border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed sm:text-sm">
+        </div>
+
+        <div class="flex justify-between">
+            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Save Booking
+            </button>
+            <a href="{% url 'booking_list' %}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'nav_bar.html' %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+    <h1 class="text-3xl font-extrabold text-gray-900 mb-6">Booking Details</h1>
+
+    <div class="bg-white shadow-md rounded-lg p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">{{ booking.tour.name }} / {{ booking.accommodation.name }}</h2>
+        
+        <div class="space-y-4">
+            <p><strong>Start Date:</strong> {{ booking.start_date }}</p>
+            <p><strong>End Date:</strong> {{ booking.end_date }}</p>
+            <p><strong>Number of People:</strong> {{ booking.number_of_people }}</p>
+            <p><strong>Total Price:</strong> ${{ booking.total_price }}</p>
+        </div>
+        
+        <div class="mt-6 flex justify-between">
+            <a href="{% url 'booking_update' booking.pk %}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Edit Booking
+            </a>
+            <a href="{% url 'booking_list' %}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                Back to Bookings
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

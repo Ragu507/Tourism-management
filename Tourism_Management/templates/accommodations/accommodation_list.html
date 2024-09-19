@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'nav_bar.html' %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-extrabold text-gray-900">Accommodations</h1>
+        {% if user.is_authenticated %}
+            <a href="{% url 'accommodation_create' %}?destination_id={{ destination.id }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Add Accommodation
+            </a>
+        {% endif %}
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for accommodation in accommodations %}
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <img src="{{ accommodation.image.url }}" alt="{{ accommodation.name }}" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold text-gray-800">{{ accommodation.name }}</h2>
+                    <p class="text-gray-600 mt-2">{{ accommodation.description|slice:":100" }}...</p>
+                    <p class="text-gray-900 mt-2 font-semibold">Price per night: ${{ accommodation.price_per_night }}</p>
+                    <p class="text-gray-700 mt-2">Available rooms: {{ accommodation.available_rooms }}</p>
+                    <a href="{% url 'accommodation_detail' accommodation.pk %}" class="text-blue-600 hover:text-blue-800 mt-4 inline-block">Read more</a>
+
+                    <!-- Conditional Delete Button -->
+                    {% if user.is_authenticated and user.is_staff %}
+                        <div class="mt-4 flex space-x-4">
+                            <a href="{% url 'accommodation_delete' accommodation.pk %}" class="text-red-600 hover:text-red-800">
+                                Delete
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-gray-500">No accommodations found for this destination.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

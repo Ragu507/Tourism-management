@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'nav_bar.html' %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-extrabold text-gray-900">Destinations</h1>
+        {% if user.is_authenticated %}
+            <a href="{% url 'destination_create' %}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Add Destination
+            </a>
+        {% endif %}
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for destination in destinations %}
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <img src="{{ destination.image.url }}" alt="{{ destination.name }}" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold text-gray-800">{{ destination.name }}</h2>
+                    <p class="text-gray-600 mt-2">{{ destination.description|slice:":100" }}...</p>
+                    <a href="{% url 'destination_detail' destination.pk %}" class="text-blue-600 hover:text-blue-800 mt-4 inline-block">Read more</a>
+
+                    <!-- Conditional Delete Button -->
+                    {% if user.is_authenticated %}
+                        <div class="mt-4 flex space-x-4">
+                            <a href="{% url 'destination_delete' destination.pk %}" class="text-red-600 hover:text-red-800">
+                                Delete
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-gray-500">No destinations found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

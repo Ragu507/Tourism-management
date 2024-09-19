@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <!-- Destination Image -->
+        <img src="{{ destination.image.url }}" alt="{{ destination.name }}" class="w-full h-64 object-cover">
+
+        <!-- Destination Information -->
+        <div class="p-6">
+            <h1 class="text-4xl font-extrabold text-gray-900">{{ destination.name }}</h1>
+            <p class="text-gray-600 mt-2">{{ destination.description }}</p>
+            <p class="text-gray-500 mt-4"><strong>Location:</strong> {{ destination.location }}</p>
+        </div>
+    </div>
+
+    <!-- Related Accommodations -->
+    <div class="mt-10">
+        <h2 class="text-2xl font-semibold text-gray-900 mb-4">Accommodations</h2>
+        {% if destination.accommodations.exists %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for accommodation in destination.accommodations.all %}
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                        <img src="{{ accommodation.image.url }}" alt="{{ accommodation.name }}" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-semibold text-gray-800">{{ accommodation.name }}</h3>
+                            <p class="text-gray-600 mt-2">{{ accommodation.description|slice:":100" }}...</p>
+                            <p class="text-gray-800 mt-2">Price per night: ${{ accommodation.price_per_night }}</p>
+                            <a href="{% url 'accommodation_detail' accommodation.pk %}" class="text-blue-600 hover:text-blue-800 mt-4 inline-block">Read more</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-gray-500">No accommodations available for this destination.</p>
+        {% endif %}
+    </div>
+
+    <!-- Related Tours -->
+    <div class="mt-10">
+        <h2 class="text-2xl font-semibold text-gray-900 mb-4">Tours</h2>
+        {% if destination.tours.exists %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for tour in destination.tours.all %}
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                        <img src="{{ tour.image.url }}" alt="{{ tour.name }}" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-semibold text-gray-800">{{ tour.name }}</h3>
+                            <p class="text-gray-600 mt-2">{{ tour.description|slice:":100" }}...</p>
+                            <p class="text-gray-800 mt-2">Price per person: ${{ tour.price_per_person }}</p>
+                            <a href="{% url 'tour_detail' tour.pk %}" class="text-blue-600 hover:text-blue-800 mt-4 inline-block">Read more</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-gray-500">No tours available for this destination.</p>
+        {% endif %}
+    </div>
+
+    <!-- Related Activities -->
+    <div class="mt-10">
+        <h2 class="text-2xl font-semibold text-gray-900 mb-4">Activities</h2>
+        {% if destination.activities.exists %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for activity in destination.activities.all %}
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                        <img src="{{ activity.image.url }}" alt="{{ activity.name }}" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-semibold text-gray-800">{{ activity.name }}</h3>
+                            <p class="text-gray-600 mt-2">{{ activity.description|slice:":100" }}...</p>
+                            <p class="text-gray-800 mt-2">Price: ${{ activity.price }}</p>
+                            <a href="{% url 'activity_detail' activity.pk %}" class="text-blue-600 hover:text-blue-800 mt-4 inline-block">Read more</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-gray-500">No activities available for this destination.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

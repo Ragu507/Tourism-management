@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-lg mx-auto mt-10">
+    <h2 class="text-4xl font-extrabold mb-6 text-center text-gray-900">Create Your Account</h2>
+    <form method="POST" class="bg-white shadow-lg rounded-lg px-8 py-10">
+        {% csrf_token %}
+        
+        <!-- Username Field -->
+        <div class="mb-6">
+            <label for="{{ form.username.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                Username
+            </label>
+            {{ form.username }}
+            <!-- If you want to style this field, you should customize it in forms.py -->
+        </div>
+        
+        <!-- Password1 Field -->
+        <div class="mb-6">
+            <label for="{{ form.password1.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                Password
+            </label>
+            {{ form.password1 }}
+        </div>
+        
+        <!-- Password2 Field -->
+        <div class="mb-6">
+            <label for="{{ form.password2.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                Confirm Password
+            </label>
+            {{ form.password2 }}
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+            <button type="submit" class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-300">
+                Sign Up
+            </button>
+        </div>
+
+        <div class="mt-6 text-center">
+            <p>Already have an account? <a href="{% url 'login' %}" class="text-blue-600 hover:underline">Login here</a></p>
+        </div>
+    </form>
+</div>
+{% endblock %}

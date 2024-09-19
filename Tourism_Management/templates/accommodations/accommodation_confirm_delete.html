@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'nav_bar.html' %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+    <div class="bg-white shadow-md rounded-lg p-6">
+        <h1 class="text-3xl font-extrabold text-gray-900">Confirm Delete</h1>
+        
+        <p class="mt-4">Are you sure you want to delete "{{ accommodation.name }}"?</p>
+        
+        <form method="post" class="mt-6">
+            {% csrf_token %}
+            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                Confirm
+            </button>
+            <a href="{% url 'accommodation_list' %}" class="ml-4 inline-block text-blue-600 hover:text-blue-800">
+                Cancel
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}
