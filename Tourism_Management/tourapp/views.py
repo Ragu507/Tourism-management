@@ -53,11 +53,6 @@ class DestinationDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView)
     template_name = 'destinations/destination_confirm_delete.html'
     success_url = reverse_lazy('destination-list')
 
-    def test_func(self):
-        # Ensure that only staff or the owner (if applicable) can delete the destination
-        return self.request.user.is_staff
-
-
 class AccommodationListView(ListView):
     model = Accommodation
     template_name = 'accommodations/accommodation_list.html'
