@@ -53,6 +53,9 @@ class DestinationDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView)
     template_name = 'destinations/destination_confirm_delete.html'
     success_url = reverse_lazy('destination-list')
 
+    def test_func(self):
+        return self.request.user 
+
 class AccommodationListView(ListView):
     model = Accommodation
     template_name = 'accommodations/accommodation_list.html'
