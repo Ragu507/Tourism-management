@@ -51,7 +51,7 @@ class DestinationDetailView(DetailView):
 class DestinationDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Destination
     template_name = 'destinations/destination_confirm_delete.html'
-    success_url = reverse_lazy('destination-list')
+    success_url = reverse_lazy('destinations_list')
 
     def test_func(self):
         return self.request.user 
