@@ -96,7 +96,7 @@ class AccommodationUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateVie
 
     def test_func(self):
         accommodation = self.get_object()
-        return self.request.user == accommodation.owner or self.request.user.is_staff  
+        return self.request.user  
 class AccommodationDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Accommodation
     template_name = 'accommodations/accommodation_confirm_delete.html'
@@ -104,7 +104,7 @@ class AccommodationDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteVie
 
     def test_func(self):
         accommodation = self.get_object()
-        return self.request.user == accommodation.owner or self.request.user.is_staff
+        return self.request.user
 
 class TourListView(ListView):
     model = Tour
