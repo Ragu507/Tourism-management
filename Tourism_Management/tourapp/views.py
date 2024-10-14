@@ -100,7 +100,7 @@ class AccommodationUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateVie
 class AccommodationDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Accommodation
     template_name = 'accommodations/accommodation_confirm_delete.html'
-    success_url = reverse_lazy('accommodation-list')
+    success_url = reverse_lazy('accommodation_list')
 
     def test_func(self):
         accommodation = self.get_object()
